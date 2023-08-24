@@ -1,11 +1,8 @@
 FactoryBot.define do
   factory :match do
-    date { "2023-08-21" }
-    location { "MyString" }
-    team_home_id { 1 }
-    team_away_id { 1 }
-    score_home { 1 }
-    score_away { 1 }
-    winner_team_id { 1 }
+    date { Faker::Date.forward(days: 30) }
+    location { Faker::Address.city }
+    association :home_team, factory: :team
+    association :away_team, factory: :team
   end
 end

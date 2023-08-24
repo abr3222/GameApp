@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :training_session do
-    date { "2023-08-21" }
-    location { "MyString" }
-    training_focus { "MyString" }
-    training_goal { "MyString" }
-    team { nil }
-    trainable { nil }
+    date { Faker::Date.forward(days: 30) }
+    location { Faker::Address.city }
+    training_focus { Faker::Lorem.word }
+    training_goal { Faker::Lorem.sentence }
+    association :team
+    trainable { create(:trainer) } # default to trainer, can be overridden in specs
   end
 end

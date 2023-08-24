@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :franchise do
-    name { "MyString" }
-    description { "MyText" }
-    team { nil }
-    brand { nil }
+    name { Faker::Company.name }
+    description { Faker::Company.bs }
+    association :team
+    association :brand
   end
 end

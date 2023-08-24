@@ -7390,3 +7390,477 @@ Migrating to AddTrainerColumnsToPeople (20230822090207)
   [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
   [1m[36mBrand Load (0.5ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`parent_brand_id` = 21 /* loading for inspect */ LIMIT 11[0m
   [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM `brands` WHERE `brands`.`parent_brand_id` = 21[0m
+  [1m[35m (17.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (117.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS `GameApp_development`[0m
+  [1m[35m (51.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS `GameApp_test`[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE DATABASE `GameApp_development` DEFAULT CHARACTER SET `utf8mb4`[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE DATABASE `GameApp_test` DEFAULT CHARACTER SET `utf8mb4`[0m
+  [1m[35m (14.4ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK('5494999985580325185', 0)[0m
+  [1m[35m (36.8ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreatePeople (20230821114223)
+  [1m[35m (29.9ms)[0m  [1m[35mCREATE TABLE `people` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `date_of_birth` date, `address` text, `phone_number` varchar(255), `email` varchar(255), `gender` varchar(255), `contract_start_date` date, `contract_end_date` date, `type` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114223')[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateBrands (20230821114229)
+  [1m[35m (45.9ms)[0m  [1m[35mCREATE TABLE `brands` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `description` text, `parent_brand_id` bigint, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_brands_on_parent_brand_id` (`parent_brand_id`), CONSTRAINT `fk_rails_fe88c50a95`
+FOREIGN KEY (`parent_brand_id`)
+  REFERENCES `brands` (`id`)
+ ON DELETE CASCADE)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114229')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTeams (20230821114234)
+  [1m[35m (51.9ms)[0m  [1m[35mCREATE TABLE `teams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `city` varchar(255), `country` varchar(255), `stadium_name` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114234')[0m
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMatches (20230821114243)
+  [1m[35m (32.6ms)[0m  [1m[35mCREATE TABLE `matches` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `date` date, `location` varchar(255), `team_home_id` int, `team_away_id` int, `score_home` int, `score_away` int, `winner_team_id` int, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114243')[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTrainingSessions (20230821114248)
+  [1m[35m (37.2ms)[0m  [1m[35mCREATE TABLE `training_sessions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `date` date, `location` varchar(255), `training_focus` varchar(255), `training_goal` varchar(255), `team_id` bigint NOT NULL, `trainable_type` varchar(255) NOT NULL, `trainable_id` bigint NOT NULL, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_training_sessions_on_team_id` (`team_id`), INDEX `index_training_sessions_on_trainable` (`trainable_type`, `trainable_id`), CONSTRAINT `fk_rails_ef3cbc3f15`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114248')[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFranchises (20230821114254)
+  [1m[35m (93.9ms)[0m  [1m[35mCREATE TABLE `franchises` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `description` text, `team_id` bigint NOT NULL, `brand_id` bigint NOT NULL, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_franchises_on_team_id` (`team_id`), INDEX `index_franchises_on_brand_id` (`brand_id`), CONSTRAINT `fk_rails_c8fabf071b`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+, CONSTRAINT `fk_rails_547ec8781b`
+FOREIGN KEY (`brand_id`)
+  REFERENCES `brands` (`id`)
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114254')[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTeamIdToPeople (20230821123733)
+  [1m[35m (53.9ms)[0m  [1m[35mALTER TABLE `people` ADD `team_id` bigint[0m
+  [1m[35m (12.5ms)[0m  [1m[35mCREATE INDEX `index_people_on_team_id` ON `people` (`team_id`)[0m
+  [1m[35m (18.0ms)[0m  [1m[35mALTER TABLE `people` ADD CONSTRAINT `fk_rails_dbbaf0d12e`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821123733')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPlayerColumnsToPeople (20230821123949)
+  [1m[35m (46.9ms)[0m  [1m[35mALTER TABLE `people` ADD `shirt_number` int[0m
+  [1m[35m (6.9ms)[0m  [1m[35mALTER TABLE `people` ADD `injury_status` tinyint(1)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821123949')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddBrandAmbassadorColumnsToPeople (20230821124008)
+  [1m[35m (31.8ms)[0m  [1m[35mALTER TABLE `people` ADD `social_media_presence` varchar(255)[0m
+  [1m[35m (6.2ms)[0m  [1m[35mALTER TABLE `people` ADD `no_of_followers` int[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821124008')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddBrandIdToPeople (20230821124532)
+  [1m[35m (44.7ms)[0m  [1m[35mALTER TABLE `people` ADD `brand_id` bigint[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821124532')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNameToTeams (20230821185146)
+  [1m[35m (63.1ms)[0m  [1m[35mALTER TABLE `teams` CHANGE `name` `name` varchar(255) NOT NULL[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821185146')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFranchiseToPeople (20230821200732)
+  [1m[35m (36.4ms)[0m  [1m[35mALTER TABLE `people` ADD `franchise_id` bigint[0m
+  [1m[35m (9.0ms)[0m  [1m[35mCREATE INDEX `index_people_on_franchise_id` ON `people` (`franchise_id`)[0m
+  [1m[35m (17.3ms)[0m  [1m[35mALTER TABLE `people` ADD CONSTRAINT `fk_rails_055759de80`
+FOREIGN KEY (`franchise_id`)
+  REFERENCES `franchises` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821200732')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTrainerColumnsToPeople (20230822090207)
+  [1m[35m (41.9ms)[0m  [1m[35mALTER TABLE `people` ADD `specialization` varchar(255)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mALTER TABLE `people` ADD `experience` varchar(255)[0m
+  [1m[35m (10.7ms)[0m  [1m[35mALTER TABLE `people` ADD `certifications` varchar(255)[0m
+  [1m[35m (8.6ms)[0m  [1m[35mALTER TABLE `people` ADD `training_approach` varchar(255)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230822090207')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2023-08-24 03:11:16.108155', '2023-08-24 03:11:16.108155')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT RELEASE_LOCK('5494999985580325185')[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams`[0m
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT `people`.* FROM `people`[0m
+  [1m[36mMatch Load (0.4ms)[0m  [1m[34mSELECT `matches`.* FROM `matches`[0m
+  [1m[36mTrainer Load (0.4ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Trainer'[0m
+  [1m[36mTrainingSession Load (0.4ms)[0m  [1m[34mSELECT `training_sessions`.* FROM `training_sessions`[0m
+  [1m[36mBrand Load (0.5ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mFranchise Load (0.4ms)[0m  [1m[34mSELECT `franchises`.* FROM `franchises`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (96.5ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Purdy and Sons', 'Medical Practice', '2023-08-24 03:11:24.235865', '2023-08-24 03:11:24.235865')[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.5ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Torp-Osinski', 'Judiciary', 1, '2023-08-24 03:11:24.338409', '2023-08-24 03:11:24.338409')[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Hegmann-Blick', 'Mining & Metals', 1, '2023-08-24 03:11:24.344797', '2023-08-24 03:11:24.344797')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Ritchie-Rolfson', 'Shipbuilding', 1, '2023-08-24 03:11:24.349086', '2023-08-24 03:11:24.349086')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Schimmel Inc', 'Primary / Secondary Education', '2023-08-24 03:11:24.352753', '2023-08-24 03:11:24.352753')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Harris Group', 'Human Resources', 5, '2023-08-24 03:11:24.356152', '2023-08-24 03:11:24.356152')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Sanford and Sons', 'Food & Beverages', 5, '2023-08-24 03:11:24.359264', '2023-08-24 03:11:24.359264')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Howell Inc', 'Financial Services', 5, '2023-08-24 03:11:24.363013', '2023-08-24 03:11:24.363013')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Zulauf LLC', 'Cosmetics', '2023-08-24 03:11:24.366769', '2023-08-24 03:11:24.366769')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Stoltenberg Group', 'Restaurants', 9, '2023-08-24 03:11:24.370590', '2023-08-24 03:11:24.370590')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Kling, Koelpin and Ernser', 'Online Media', 9, '2023-08-24 03:11:24.374472', '2023-08-24 03:11:24.374472')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.4ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Weimann Inc', 'Computer Hardware', 9, '2023-08-24 03:11:24.378350', '2023-08-24 03:11:24.378350')[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Russel LLC', 'Facilities Services', '2023-08-24 03:11:24.382517', '2023-08-24 03:11:24.382517')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.2ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Smith, Rosenbaum and Borer', 'Banking', 13, '2023-08-24 03:11:24.386502', '2023-08-24 03:11:24.386502')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Roberts, Morissette and Glover', 'Mining & Metals', 13, '2023-08-24 03:11:24.390168', '2023-08-24 03:11:24.390168')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Jerde-Schuppe', 'Sporting Goods', 13, '2023-08-24 03:11:24.393407', '2023-08-24 03:11:24.393407')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Buckridge Inc', 'Law Enforcement', '2023-08-24 03:11:24.397063', '2023-08-24 03:11:24.397063')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Flatley-Emard', 'Business Supplies and Equipment', 17, '2023-08-24 03:11:24.400455', '2023-08-24 03:11:24.400455')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('O\'Reilly Inc', 'Education Management', 17, '2023-08-24 03:11:24.403642', '2023-08-24 03:11:24.403642')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Create (0.3ms)[0m  [1m[32mINSERT INTO `brands` (`name`, `description`, `parent_brand_id`, `created_at`, `updated_at`) VALUES ('Spinka, Davis and Mraz', 'Printing', 17, '2023-08-24 03:11:24.406750', '2023-08-24 03:11:24.406750')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Create (0.4ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `city`, `country`, `stadium_name`, `created_at`, `updated_at`) VALUES ('Schalke 04', 'Wardfort', 'Denmark', 'Devora Herzog CPA Stadium', '2023-08-24 03:11:24.416766', '2023-08-24 03:11:24.416766')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`, `shirt_number`, `injury_status`) VALUES ('Franck Ribery', '1995-09-26', '76339 Gertie Square, East Chiekoville, OR 28198', '(338) 801-5533 x386', 'dana@klein.com', 'female', 'Player', '2023-08-24 03:11:24.458756', '2023-08-24 03:11:24.458756', 1, 37, FALSE)[0m
+  [1m[36mTRANSACTION (21.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.4ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mManager Create (0.5ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`) VALUES ('Jurgen Klopp', '1994-09-15', 'Apt. 360 9641 Wilkinson Junction, New Jack, NC 54463', '1-350-935-2328', 'adelle.gusikowski@romaguera-wiegand.org', 'female', 'Manager', '2023-08-24 03:11:24.506358', '2023-08-24 03:11:24.506358', 1)[0m
+  [1m[36mTRANSACTION (61.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.5ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Load (0.4ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 3 LIMIT 1[0m
+  [1m[36mBrandAmbassador Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `social_media_presence`, `no_of_followers`, `brand_id`) VALUES ('Vivien Herman', '1979-09-14', '5003 Abshire Hills, South Lavera, VT 72548-6514', '167.316.6249 x573', 'joe@huels.co', 'male', 'BrandAmbassador', '2023-08-24 03:11:24.603860', '2023-08-24 03:11:24.603860', 'Twitter', 64854, 3)[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `teams`.`id` FROM `teams`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrainer Create (0.4ms)[0m  [1m[32mINSERT INTO `people` (`name`, `email`, `gender`, `type`, `created_at`, `updated_at`, `specialization`, `experience`, `certifications`, `training_approach`) VALUES ('Dominic Trantow', 'inge.skiles@ortiz.io', 'female', 'Trainer', '2023-08-24 03:11:24.632090', '2023-08-24 03:11:24.632090', 'Marketing', '6', 'Bachelor', 'Offline')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mManager Load (0.4ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Manager' ORDER BY `people`.`id` DESC LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mTrainingSession Create (0.3ms)[0m  [1m[32mINSERT INTO `training_sessions` (`date`, `location`, `training_focus`, `training_goal`, `team_id`, `trainable_type`, `trainable_id`, `created_at`, `updated_at`) VALUES ('2023-10-13', 'West Fatimah', 'Endurance', 'Sint officia quibusdam.', 1, 'Person', 4, '2023-08-24 03:11:24.649359', '2023-08-24 03:11:24.649359')[0m
+  [1m[36mTRANSACTION (43.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.5ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 17 LIMIT 1[0m
+  [1m[36mFranchise Create (0.3ms)[0m  [1m[32mINSERT INTO `franchises` (`name`, `description`, `team_id`, `brand_id`, `created_at`, `updated_at`) VALUES ('Tromp, McGlynn and Spinka', 'parallelism', 1, 17, '2023-08-24 03:11:24.710513', '2023-08-24 03:11:24.710513')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Create (0.3ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `city`, `country`, `stadium_name`, `created_at`, `updated_at`) VALUES ('Inter Milan', 'South Tobyborough', 'Chad', 'Delphine Pacocha Stadium', '2023-08-24 03:11:24.714873', '2023-08-24 03:11:24.714873')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.4ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mPlayer Create (0.5ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`, `shirt_number`, `injury_status`) VALUES ('Alvaro Morata', '1991-09-03', '9664 Adams Extension, Port Ernesto, NC 02422', '869-924-8215 x6062', 'daren@mann.co', 'female', 'Player', '2023-08-24 03:11:24.724387', '2023-08-24 03:11:24.724387', 2, 44, FALSE)[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mManager Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`) VALUES ('Zinedine Zidane', '1992-07-07', '264 Berge Village, Port Cletusland, WA 27616-5522', '125-366-0870 x9996', 'hang.powlowski@simonis.io', 'male', 'Manager', '2023-08-24 03:11:24.734039', '2023-08-24 03:11:24.734039', 2)[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 8 LIMIT 1[0m
+  [1m[36mBrandAmbassador Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `social_media_presence`, `no_of_followers`, `brand_id`) VALUES ('Tawnya Gulgowski', '1982-04-12', 'Apt. 441 54440 Narcisa Hollow, Lake Brittney, NY 94580', '537-306-4776 x64407', 'savannah_daniel@price.co', 'female', 'BrandAmbassador', '2023-08-24 03:11:24.745628', '2023-08-24 03:11:24.745628', 'Twitter', 76693, 8)[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `teams`.`id` FROM `teams`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrainer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `email`, `gender`, `type`, `created_at`, `updated_at`, `specialization`, `experience`, `certifications`, `training_approach`) VALUES ('Shakita Hand PhD', 'scotty@streich.name', 'male', 'Trainer', '2023-08-24 03:11:24.756144', '2023-08-24 03:11:24.756144', 'Accounting', '7', 'Doctorate', 'Online')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mManager Load (0.3ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Manager' ORDER BY `people`.`id` DESC LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mTrainingSession Create (0.3ms)[0m  [1m[32mINSERT INTO `training_sessions` (`date`, `location`, `training_focus`, `training_goal`, `team_id`, `trainable_type`, `trainable_id`, `created_at`, `updated_at`) VALUES ('2023-10-14', 'Lake Antoine', 'Strength', 'Sequi velit quis.', 2, 'Person', 8, '2023-08-24 03:11:24.763598', '2023-08-24 03:11:24.763598')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mBrand Load (0.2ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 3 LIMIT 1[0m
+  [1m[36mFranchise Create (0.3ms)[0m  [1m[32mINSERT INTO `franchises` (`name`, `description`, `team_id`, `brand_id`, `created_at`, `updated_at`) VALUES ('Ryan-Mann', 'zero administration', 2, 3, '2023-08-24 03:11:24.770931', '2023-08-24 03:11:24.770931')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Create (0.3ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `city`, `country`, `stadium_name`, `created_at`, `updated_at`) VALUES ('Real Madrid', 'Port Josh', 'Cote d\'Ivoire', 'Gov. Lashay Hammes Stadium', '2023-08-24 03:11:24.774642', '2023-08-24 03:11:24.774642')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`, `shirt_number`, `injury_status`) VALUES ('David De Gea', '1992-09-06', '83177 Herb Knoll, Sydneyside, NY 08414', '207.238.5057', 'karla@bogisich-schimmel.com', 'male', 'Player', '2023-08-24 03:11:24.784159', '2023-08-24 03:11:24.784159', 3, 59, FALSE)[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mManager Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`) VALUES ('Mauricio Pochettino', '1990-06-12', 'Apt. 509 2199 Freddie Rest, South Ferne, NC 60600', '865-759-6187 x174', 'valentine@vandervort.info', 'male', 'Manager', '2023-08-24 03:11:24.792624', '2023-08-24 03:11:24.792624', 3)[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.4ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Load (0.2ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 20 LIMIT 1[0m
+  [1m[36mBrandAmbassador Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `social_media_presence`, `no_of_followers`, `brand_id`) VALUES ('Colby Wintheiser', '1985-07-07', 'Suite 522 3027 Thora Villages, West Neilside, NC 29460-0328', '205.310.7616 x18904', 'boyce_hilll@mcdermott.name', 'male', 'BrandAmbassador', '2023-08-24 03:11:24.803906', '2023-08-24 03:11:24.803906', 'Facebook', 77164, 20)[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `teams`.`id` FROM `teams`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 2 LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrainer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `email`, `gender`, `type`, `created_at`, `updated_at`, `specialization`, `experience`, `certifications`, `training_approach`) VALUES ('Claribel Connelly MD', 'maren@king-goldner.co', 'male', 'Trainer', '2023-08-24 03:11:24.813835', '2023-08-24 03:11:24.813835', 'Hospitality', '20', 'Associates', 'Online')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mManager Load (0.4ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Manager' ORDER BY `people`.`id` DESC LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mTrainingSession Create (0.3ms)[0m  [1m[32mINSERT INTO `training_sessions` (`date`, `location`, `training_focus`, `training_goal`, `team_id`, `trainable_type`, `trainable_id`, `created_at`, `updated_at`) VALUES ('2023-08-28', 'Fridaton', 'Tactics', 'Aut quia dolor.', 3, 'Person', 12, '2023-08-24 03:11:24.821977', '2023-08-24 03:11:24.821977')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.4ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 15 LIMIT 1[0m
+  [1m[36mFranchise Create (0.4ms)[0m  [1m[32mINSERT INTO `franchises` (`name`, `description`, `team_id`, `brand_id`, `created_at`, `updated_at`) VALUES ('Wiza-Toy', 'archive', 3, 15, '2023-08-24 03:11:24.830399', '2023-08-24 03:11:24.830399')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Create (0.3ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `city`, `country`, `stadium_name`, `created_at`, `updated_at`) VALUES ('PSV Eindhoven', 'Jaskolskiside', 'Sao Tome and Principe', 'Nicolas Ruecker Stadium', '2023-08-24 03:11:24.834645', '2023-08-24 03:11:24.834645')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 4 LIMIT 1[0m
+  [1m[36mPlayer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`, `shirt_number`, `injury_status`) VALUES ('Franck Ribery', '1989-11-20', '5384 Bruen Isle, New Kathifurt, NC 03784', '1-924-771-5600', 'willard_hartmann@jaskolski.io', 'female', 'Player', '2023-08-24 03:11:24.843684', '2023-08-24 03:11:24.843684', 4, 98, TRUE)[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 4 LIMIT 1[0m
+  [1m[36mManager Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`) VALUES ('Ernesto Valverde', '1972-07-13', 'Apt. 986 15592 Abshire Rapid, Port Auroraville, AK 25037-9101', '119.801.8864 x0571', 'dann_lebsack@roberts.name', 'male', 'Manager', '2023-08-24 03:11:24.852291', '2023-08-24 03:11:24.852291', 4)[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 4 LIMIT 1[0m
+  [1m[36mBrandAmbassador Create (0.4ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `social_media_presence`, `no_of_followers`, `brand_id`) VALUES ('Ms. Gidget Russel', '2002-11-14', '26912 Liane Circles, New Williemaeside, OR 64546', '594-252-9957 x0515', 'kendall@nolan.org', 'female', 'BrandAmbassador', '2023-08-24 03:11:24.862771', '2023-08-24 03:11:24.862771', 'Facebook', 90548, 4)[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `teams`.`id` FROM `teams`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 4 LIMIT 1[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 3 LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrainer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `email`, `gender`, `type`, `created_at`, `updated_at`, `specialization`, `experience`, `certifications`, `training_approach`) VALUES ('The Hon. Regan Beatty', 'joella@torp.name', 'female', 'Trainer', '2023-08-24 03:11:24.874507', '2023-08-24 03:11:24.874507', 'Accounting', '8', 'Doctorate', 'Offline')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mManager Load (0.3ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Manager' ORDER BY `people`.`id` DESC LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 4 LIMIT 1[0m
+  [1m[36mTrainingSession Create (0.3ms)[0m  [1m[32mINSERT INTO `training_sessions` (`date`, `location`, `training_focus`, `training_goal`, `team_id`, `trainable_type`, `trainable_id`, `created_at`, `updated_at`) VALUES ('2023-10-19', 'South Nicoletteshire', 'Strength', 'Vero exercitationem dolor.', 4, 'Person', 14, '2023-08-24 03:11:24.883186', '2023-08-24 03:11:24.883186')[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 4 LIMIT 1[0m
+  [1m[36mBrand Load (0.2ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 13 LIMIT 1[0m
+  [1m[36mFranchise Create (0.3ms)[0m  [1m[32mINSERT INTO `franchises` (`name`, `description`, `team_id`, `brand_id`, `created_at`, `updated_at`) VALUES ('Wyman and Sons', 'Visionary', 4, 13, '2023-08-24 03:11:24.891319', '2023-08-24 03:11:24.891319')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Create (0.4ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `city`, `country`, `stadium_name`, `created_at`, `updated_at`) VALUES ('Valencia CF', 'Tysonhaven', 'Bosnia and Herzegovina', 'Branden Marquardt Stadium', '2023-08-24 03:11:24.895341', '2023-08-24 03:11:24.895341')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 5 LIMIT 1[0m
+  [1m[36mPlayer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`, `shirt_number`, `injury_status`) VALUES ('Gerard Pique', '1985-05-02', 'Suite 809 8566 Millicent Street, Faheyfurt, HI 42051', '178-890-5045 x1345', 'lindsay.hessel@beier.net', 'female', 'Player', '2023-08-24 03:11:24.906150', '2023-08-24 03:11:24.906150', 5, 34, FALSE)[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 5 LIMIT 1[0m
+  [1m[36mManager Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `team_id`) VALUES ('Zinedine Zidane', '1977-12-24', '9098 Arica Shoal, Catalinatown, NH 46958-6794', '1-529-765-8603', 'ronny_schiller@dicki-jacobi.co', 'female', 'Manager', '2023-08-24 03:11:24.915038', '2023-08-24 03:11:24.915038', 5)[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 18 LIMIT 1[0m
+  [1m[36mBrandAmbassador Create (0.4ms)[0m  [1m[32mINSERT INTO `people` (`name`, `date_of_birth`, `address`, `phone_number`, `email`, `gender`, `type`, `created_at`, `updated_at`, `social_media_presence`, `no_of_followers`, `brand_id`) VALUES ('Billi Fay', '1974-04-22', '653 Ronni Burgs, Ryanland, IN 63378-9073', '(485) 114-5004', 'cathleen@rau.co', 'female', 'BrandAmbassador', '2023-08-24 03:11:24.925597', '2023-08-24 03:11:24.925597', 'Instagram', 24139, 18)[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `teams`.`id` FROM `teams`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 5 LIMIT 1[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 1 LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrainer Create (0.3ms)[0m  [1m[32mINSERT INTO `people` (`name`, `email`, `gender`, `type`, `created_at`, `updated_at`, `specialization`, `experience`, `certifications`, `training_approach`) VALUES ('Hipolito Hand', 'dorsey.yost@wolf-bailey.org', 'male', 'Trainer', '2023-08-24 03:11:24.936166', '2023-08-24 03:11:24.936166', 'Hospitality', '2', 'Associates', 'Online')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mManager Load (0.2ms)[0m  [1m[34mSELECT `people`.* FROM `people` WHERE `people`.`type` = 'Manager' ORDER BY `people`.`id` DESC LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 5 LIMIT 1[0m
+  [1m[36mTrainingSession Create (0.3ms)[0m  [1m[32mINSERT INTO `training_sessions` (`date`, `location`, `training_focus`, `training_goal`, `team_id`, `trainable_type`, `trainable_id`, `created_at`, `updated_at`) VALUES ('2023-10-06', 'Lettieland', 'Tactics', 'Et omnis quis.', 5, 'Person', 20, '2023-08-24 03:11:24.942885', '2023-08-24 03:11:24.942885')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBrand Load (0.3ms)[0m  [1m[34mSELECT `brands`.* FROM `brands`[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTeam Load (0.3ms)[0m  [1m[34mSELECT `teams`.* FROM `teams` WHERE `teams`.`id` = 5 LIMIT 1[0m
+  [1m[36mBrand Load (0.2ms)[0m  [1m[34mSELECT `brands`.* FROM `brands` WHERE `brands`.`id` = 4 LIMIT 1[0m
+  [1m[36mFranchise Create (0.3ms)[0m  [1m[32mINSERT INTO `franchises` (`name`, `description`, `team_id`, `brand_id`, `created_at`, `updated_at`) VALUES ('Connelly-Shields', 'instruction set', 5, 4, '2023-08-24 03:11:24.950503', '2023-08-24 03:11:24.950503')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (97.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS `GameApp_development`[0m
+  [1m[35m (103.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS `GameApp_test`[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE DATABASE `GameApp_development` DEFAULT CHARACTER SET `utf8mb4`[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE DATABASE `GameApp_test` DEFAULT CHARACTER SET `utf8mb4`[0m
+  [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT GET_LOCK('5494999985580325185', 0)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreatePeople (20230821114223)
+  [1m[35m (53.0ms)[0m  [1m[35mCREATE TABLE `people` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `date_of_birth` date, `address` text, `phone_number` varchar(255), `email` varchar(255), `gender` varchar(255), `contract_start_date` date, `contract_end_date` date, `type` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114223')[0m
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateBrands (20230821114229)
+  [1m[35m (53.0ms)[0m  [1m[35mCREATE TABLE `brands` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `description` text, `parent_brand_id` bigint, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_brands_on_parent_brand_id` (`parent_brand_id`), CONSTRAINT `fk_rails_fe88c50a95`
+FOREIGN KEY (`parent_brand_id`)
+  REFERENCES `brands` (`id`)
+ ON DELETE CASCADE)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114229')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTeams (20230821114234)
+  [1m[35m (52.5ms)[0m  [1m[35mCREATE TABLE `teams` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `city` varchar(255), `country` varchar(255), `stadium_name` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114234')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMatches (20230821114243)
+  [1m[35m (59.7ms)[0m  [1m[35mCREATE TABLE `matches` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `date` date, `location` varchar(255), `team_home_id` int, `team_away_id` int, `score_home` int, `score_away` int, `winner_team_id` int, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114243')[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTrainingSessions (20230821114248)
+  [1m[35m (51.9ms)[0m  [1m[35mCREATE TABLE `training_sessions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `date` date, `location` varchar(255), `training_focus` varchar(255), `training_goal` varchar(255), `team_id` bigint NOT NULL, `trainable_type` varchar(255) NOT NULL, `trainable_id` bigint NOT NULL, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_training_sessions_on_team_id` (`team_id`), INDEX `index_training_sessions_on_trainable` (`trainable_type`, `trainable_id`), CONSTRAINT `fk_rails_ef3cbc3f15`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114248')[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateFranchises (20230821114254)
+  [1m[35m (49.7ms)[0m  [1m[35mCREATE TABLE `franchises` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `description` text, `team_id` bigint NOT NULL, `brand_id` bigint NOT NULL, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL, INDEX `index_franchises_on_team_id` (`team_id`), INDEX `index_franchises_on_brand_id` (`brand_id`), CONSTRAINT `fk_rails_c8fabf071b`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+, CONSTRAINT `fk_rails_547ec8781b`
+FOREIGN KEY (`brand_id`)
+  REFERENCES `brands` (`id`)
+)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821114254')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTeamIdToPeople (20230821123733)
+  [1m[35m (50.9ms)[0m  [1m[35mALTER TABLE `people` ADD `team_id` bigint[0m
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE INDEX `index_people_on_team_id` ON `people` (`team_id`)[0m
+  [1m[35m (14.7ms)[0m  [1m[35mALTER TABLE `people` ADD CONSTRAINT `fk_rails_dbbaf0d12e`
+FOREIGN KEY (`team_id`)
+  REFERENCES `teams` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821123733')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPlayerColumnsToPeople (20230821123949)
+  [1m[35m (47.2ms)[0m  [1m[35mALTER TABLE `people` ADD `shirt_number` int[0m
+  [1m[35m (6.9ms)[0m  [1m[35mALTER TABLE `people` ADD `injury_status` tinyint(1)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821123949')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddBrandAmbassadorColumnsToPeople (20230821124008)
+  [1m[35m (48.7ms)[0m  [1m[35mALTER TABLE `people` ADD `social_media_presence` varchar(255)[0m
+  [1m[35m (6.2ms)[0m  [1m[35mALTER TABLE `people` ADD `no_of_followers` int[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821124008')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddBrandIdToPeople (20230821124532)
+  [1m[35m (45.8ms)[0m  [1m[35mALTER TABLE `people` ADD `brand_id` bigint[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821124532')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNameToTeams (20230821185146)
+  [1m[35m (57.0ms)[0m  [1m[35mALTER TABLE `teams` CHANGE `name` `name` varchar(255) NOT NULL[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821185146')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFranchiseToPeople (20230821200732)
+  [1m[35m (52.3ms)[0m  [1m[35mALTER TABLE `people` ADD `franchise_id` bigint[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE INDEX `index_people_on_franchise_id` ON `people` (`franchise_id`)[0m
+  [1m[35m (20.1ms)[0m  [1m[35mALTER TABLE `people` ADD CONSTRAINT `fk_rails_055759de80`
+FOREIGN KEY (`franchise_id`)
+  REFERENCES `franchises` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230821200732')[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTrainerColumnsToPeople (20230822090207)
+  [1m[35m (47.9ms)[0m  [1m[35mALTER TABLE `people` ADD `specialization` varchar(255)[0m
+  [1m[35m (6.9ms)[0m  [1m[35mALTER TABLE `people` ADD `experience` varchar(255)[0m
+  [1m[35m (7.4ms)[0m  [1m[35mALTER TABLE `people` ADD `certifications` varchar(255)[0m
+  [1m[35m (7.7ms)[0m  [1m[35mALTER TABLE `people` ADD `training_approach` varchar(255)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230822090207')[0m
+  [1m[36mTRANSACTION (39.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2023-08-24 03:17:36.031821', '2023-08-24 03:17:36.031821')[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('5494999985580325185')[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/" for ::1 at 2023-08-24 08:19:35 +0500
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/hafizabr/.rvm/gems/ruby-2.7.1/gems/railties-6.1.7.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/hafizabr/.rvm/gems/ruby-2.7.1/gems/railties-6.1.7.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 6.5ms | Allocations: 338)
+Completed 200 OK in 20ms (Views: 9.3ms | ActiveRecord: 0.0ms | Allocations: 2501)
+
+
