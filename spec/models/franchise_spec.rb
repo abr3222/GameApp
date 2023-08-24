@@ -1,14 +1,13 @@
+# spec/models/franchise_spec.rb
 require 'rails_helper'
 
 RSpec.describe Franchise, type: :model do
-  context "validations" do
-    it { should validate_presence_of(:name) } # Assuming a name attribute exists
-    # Add other attribute validations as required
+  context 'when validating attributes' do
+    it { should validate_presence_of(:name) }
   end
 
-  context "associations" do
-    # Assuming a Franchise has many Players
+  context 'when checking associations' do
     it { should have_many(:players) }
-    # Add other association tests as needed
+    it { should belong_to(:brand) }
   end
 end

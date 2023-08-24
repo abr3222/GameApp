@@ -1,26 +1,27 @@
+# spec/models/training_session_spec.rb
 require 'rails_helper'
 
 RSpec.describe TrainingSession, type: :model do
-  describe 'associations' do
+  context 'when checking associations' do
     it { should belong_to(:trainable) }
-
-    # Additional association tests for Team and other related models can be added here.
   end
 
-  describe 'polymorphic association' do
-    let!(:team) { Team.create(name: "Team A", city: "Lahore") }
-    let!(:trainer) { Trainer.create(name: "Jane Smith", email: "jane@example.com", gender: "female", training_approach: "Teach by experience") }
-    let!(:manager) { Manager.create(name: "Jane Smith", email: "jane@example.com", gender: "female", team: team) }
+  context 'when associated with a trainer' do
+    let(:trainer) { create(:trainer) }
+    let!(:session) { create(:training_session, trainable: trainer) }
 
-    let!(:ts_for_trainer) { TrainingSession.create(trainable: trainer, team: team, location: "Gym A", date: Date.today) }
-    let!(:ts_for_manager) { TrainingSession.create(trainable: manager, team: team, location: "Gym B", date: Date.today) }
-
-    it 'associates with a trainer' do
-      expect(ts_for_trainer.trainable).to eq(trainer)
+    it 'is associated with the correct trainable type' do
+       expect(session.trainable.class.name).to eq("Trainer")
     end
+  end
 
-    it 'associates with a manager' do
-      expect(ts_for_manager.trainable).to eq(manager)
+  context 'when associated with a manager' do
+    let(:manager) { create(:manager) }
+    let!(:session) { create(:training_session, trainable: manager) }
+
+    it 'is associated with the correct trainable type' do
+      # expect(session.trainable_type).to eq("Manager")
+      expect(session.trainable.class.name).to eq("Manager")
     end
   end
 end

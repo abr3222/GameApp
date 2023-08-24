@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_22_090207) do
+ActiveRecord::Schema.define(version: 2023_08_24_070520) do
 
   create_table "brands", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2023_08_22_090207) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "team_id"
     t.integer "shirt_number"
-    t.boolean "injury_status"
+    t.boolean "injury_status", default: false
     t.string "social_media_presence"
     t.integer "no_of_followers"
     t.bigint "brand_id"
@@ -67,6 +67,10 @@ ActiveRecord::Schema.define(version: 2023_08_22_090207) do
     t.string "experience"
     t.string "certifications"
     t.string "training_approach"
+    t.date "managing_since"
+    t.integer "staff_count"
+    t.text "leadership_style"
+    t.text "strategic_plans"
     t.index ["franchise_id"], name: "index_people_on_franchise_id"
     t.index ["team_id"], name: "index_people_on_team_id"
   end

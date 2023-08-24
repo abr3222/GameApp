@@ -5,4 +5,7 @@ class Trainer < Person
 
   # Validations
   validates :training_approach, presence: true
+  validates :specialization, presence: true
+  validates :experience, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :certifications, presence: true
 end
