@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Brand, type: :model do
 
   let(:brand) { build(:brand) }
-  let(:franchises) { build_list(:franchise, 3, brand: brand) } # Build strategies
+  let(:franchises) { build_list(:franchise, 3, brand: brand) } # Build List strategies Using traits
 
   context 'when validating fields' do
     it { should validate_presence_of(:name) }
