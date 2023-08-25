@@ -14,6 +14,12 @@ RSpec.describe Player, type: :model do
     #   expect(player).not_to be_valid
     #   expect(player.errors.details[:injury_status][0][:error]).to eq(:inclusion)
     # end
+    # describe "#fit_for_play? if private" do
+    #   it "when user is fit" do
+    #     result = player.send(:fit_for_play?)
+    #     expect(result).to eq(expected_value)
+    #   end
+    # end
 
     context 'player fitness' do
       it 'is not fit for play when injury_status is true' do

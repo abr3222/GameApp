@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2023_08_24_070520) do
 
   create_table "training_sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date"
+    t.string "title"
     t.string "location"
     t.string "training_focus"
     t.string "training_goal"
