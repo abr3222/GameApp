@@ -13,6 +13,16 @@ shared_examples 'a trainable session' do |model_name|
   end
 end
 
+# This can be placed at the beginning of your spec file or even better in a separate helper file.
+shared_examples 'returns expected teams count' do |expected_count|
+  it { expect(subject.count).to eq(expected_count) }
+end
+
+shared_examples 'matches team names' do |expected_names|
+  it { expect(subject.pluck(:name)).to match_array(expected_names) }
+end
+
+
 # shared_examples 'a trainable session' do |trait, trainable_type|
 #   let(:session) { create(:training_session, trait) }
 #
