@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_24_070520) do
+ActiveRecord::Schema.define(version: 2023_08_28_144627) do
 
   create_table "brands", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -21,15 +21,22 @@ ActiveRecord::Schema.define(version: 2023_08_24_070520) do
     t.index ["parent_brand_id"], name: "index_brands_on_parent_brand_id"
   end
 
+  create_table "franchise_teams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "franchise_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["franchise_id"], name: "index_franchise_teams_on_franchise_id"
+    t.index ["team_id"], name: "index_franchise_teams_on_team_id"
+  end
+
   create_table "franchises", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.bigint "team_id", null: false
     t.bigint "brand_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["brand_id"], name: "index_franchises_on_brand_id"
-    t.index ["team_id"], name: "index_franchises_on_team_id"
   end
 
   create_table "matches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -100,8 +107,9 @@ ActiveRecord::Schema.define(version: 2023_08_24_070520) do
   end
 
   add_foreign_key "brands", "brands", column: "parent_brand_id", on_delete: :cascade
+  add_foreign_key "franchise_teams", "franchises"
+  add_foreign_key "franchise_teams", "teams"
   add_foreign_key "franchises", "brands"
-  add_foreign_key "franchises", "teams"
   add_foreign_key "people", "franchises"
   add_foreign_key "people", "teams"
   add_foreign_key "training_sessions", "teams"

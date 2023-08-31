@@ -1,0 +1,74 @@
+brand_frenchises_data:
+  - brand_name: "Vivo"
+    frenchises:
+      - "Vivo French 1"
+      - "Vivo French 2"
+  - brand_name: "TCL"
+    frenchises:
+      - "TCL French 1"
+      - "TCL French 2"
+  - brand_name: "Apple"
+    frenchises:
+      - "Apple French"
+
+team_data:
+  - city: "Lahore"
+    teams:
+      - team_name: "Team_1"
+        frenchises:
+          - "Vivo French 1"
+          - "Vivo French 2"
+      - team_name: "Team_2"
+        frenchises:
+          - "Vivo French 1"
+      - team_name: "Team_3"
+        frenchises:
+          - "Vivo French 2"
+      - team_name: "Team_4"
+        frenchises: []
+      - team_name: "Team_5"
+        frenchises:
+          - "TCL French 1"
+          - "TCL French 2"
+      - team_name: "Team_6"
+        frenchises:
+          - "TCL French 1"
+          - "TCL French 2"
+      - team_name: "Team_7"
+        frenchises:
+          - "TCL French 2"
+      - team_name: "Team_8"
+        frenchises:
+          - "TCL French 1"
+      - team_name: "Team_9"
+        frenchises:
+          - "Apple French"
+
+  - city: "Karachi"
+    teams:
+      - team_name: "Team_10"
+        frenchises:
+          - "TCL French 1"
+          - "TCL French 2"
+      - team_name: "Team_11"
+        frenchises:
+          - "TCL French 1"
+      - team_name: "Team_12"
+        frenchises:
+          - "Vivo French 2"
+      - team_name: "Team_13"
+        frenchises:
+          - "Apple French"
+      - team_name: "Team_14"
+        frenchises: []
+
+  - city: "Fasilabad"
+    teams:
+      - team_name: "Team_15"
+        frenchises:
+          - "TCL French 1"
+      - team_name: "Team_16"
+        frenchises:
+          - "Vivo French 1"
+      - team_name: "Team_17"
+        frenchises: []
