@@ -14,16 +14,12 @@ shared_examples 'a trainable session' do |model_name|
 end
 
 # This can be placed at the beginning of your spec file or even better in a separate helper file.
-RSpec.shared_examples 'returns expected teams count' do |expected_count|
-  it "returns #{expected_count} teams" do
-    expect(subject.count).to eq(expected_count)
-  end
+shared_examples 'returns expected teams count' do |expected_count|
+  it { expect(subject.count).to eq(expected_count) }
 end
 
-RSpec.shared_examples 'matches team names' do |expected_names|
-  it "matches the team names: #{expected_names.join(', ')}" do
-    expect(subject.pluck(:name)).to match_array(expected_names)
-  end
+shared_examples 'matches team names' do |expected_names|
+  it { expect(subject.pluck(:name)).to match_array(expected_names) }
 end
 
 

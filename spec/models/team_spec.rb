@@ -14,14 +14,6 @@ RSpec.describe Team, type: :model do
   describe 'scopes' do
     subject { described_class }
 
-    shared_examples 'returns expected teams count' do |expected_count|
-      it { expect(subject.count).to eq(expected_count) }
-    end
-
-    shared_examples 'matches team names' do |expected_names|
-      it { expect(subject.pluck(:name)).to match_array(expected_names) }
-    end
-
     describe '.without_brand' do
       subject { described_class.without_brand }
 
